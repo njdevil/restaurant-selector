@@ -1,0 +1,56 @@
+models
+restaurant (article)
+    addr
+    lat/long
+    cross/between st
+    phone
+    reservations required
+    hours
+    price
+    cuisine
+    neighborhood
+    subway
+    details
+comment
+    user
+    text
+votes (if necessary)
+    yes
+    no
+user
+    super user
+    reg user
+    anon user
+    
+
+scenarios
+    search restaurant
+        neighborhood
+        cuisine
+        price
+    view restaurant
+        details
+    review restaurant
+        text
+        vote
+    lockout multiple votes by user?
+        what if restaurant changes for better or worse?
+        time lock?
+        open voting?
+        
+pages
+    main
+        retrieve all restaurants
+        random
+        sort by review yes/(yes+no)
+    restaurant page
+        details of the restaurant
+            text
+            votes
+            new comments
+            comments
+    add restaurant
+        details
+    delete restaurant (i.e., closed)
+        confirm (submit)
+    user auth form (if necessary)

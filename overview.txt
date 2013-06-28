@@ -11,6 +11,7 @@ restaurant (article)
     neighborhood
     subway
     details
+    last visited date
 comment
     user
     text
@@ -51,6 +52,6 @@ pages
             comments
     add restaurant
         details
-    delete restaurant (i.e., closed)
+    modify restaurant (i.e., closed)
         confirm (submit)
     user auth form (if necessary)

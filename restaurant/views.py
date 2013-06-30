@@ -3,7 +3,10 @@ from fueled.restaurant.models import Restaurant, Comment
 import re
 
 def index(request):
-    data=Restaurant.objects.all().order_by('-rank_pct').values().extra(select={'commentcount':'select count(restaurant_comment.id) from restaurant_comment where restaurant_comment.restaurant_id=restaurant_restaurant.id'},)
+    if request.get_full_path()=="/random/":
+        data=Restaurant.objects.all().order_by('?').values().extra(select={'commentcount':'select count(restaurant_comment.id) from restaurant_comment where restaurant_comment.restaurant_id=restaurant_restaurant.id'},)
+    else:
+        data=Restaurant.objects.all().order_by('-rank_pct').values().extra(select={'commentcount':'select count(restaurant_comment.id) from restaurant_comment where restaurant_comment.restaurant_id=restaurant_restaurant.id'},)
     if request.POST:
         post=request.POST.copy()
         x=Restaurant.objects.filter(pk=post["id"]).values()
@@ -17,7 +20,7 @@ def index(request):
             new_vote_no=float(x[0]["vote_no"])+1
             new_rank_pct="%.4f" % (old_vote_yes/(old_vote_yes+new_vote_no))
             Restaurant.objects.filter(pk=post["id"]).update(vote_no=new_vote_no, rank_pct=new_rank_pct)
-    return render_to_response('index.html', {'data': data})
+    return render_to_response('index.html', {'data': data, 'test':request.get_full_path()})
 
 def add_restaurant(request):
     pass

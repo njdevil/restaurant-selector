@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$|index|index.html','fueled.restaurant.views.index'),
+    url(r'^random/$','fueled.restaurant.views.index'),
     url(r'^restaurant/(?P<restaurant>.*)/edit/$','fueled.restaurant.views.edit_restaurant'),
     url(r'^restaurant/(?P<restaurant>.*)/$','fueled.restaurant.views.show_restaurant'),
     url(r'^restaurant/add/$','fueled.restaurant.views.add_restaurant'),

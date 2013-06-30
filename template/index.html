@@ -1,8 +1,51 @@
 {% extends "base.html" %}
+{% load mathtags %}
 {% block content %}
+<div id="field">
 Restaurant List
 <br><br>
+
 {% for restaurant in data %}
-{{restaurant.name}}<br>
+{% autoescape off %}
+<div id="postbox">
+<div id="content">
+<h2><a href="/restaurant/{{restaurant.name|slugify}}">{{restaurant.name}}</a></h2>
+<br>{{restaurant.address}}
+<br>{{restaurant.city}}{% if restaurant.state %},{% endif %} {{restaurant.state}}&nbsp;{{restaurant.postcode}}
+<br>{{restaurant.country}}
+<br>Comments: {{restaurant.commentcount}}
+<br>Rank: {{restaurant.rank_pct}}
+<br>Yes: {{restaurant.vote_yes}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No: {{restaurant.vote_no}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total votes: {% add restaurant.vote_yes restaurant.vote_no %}
+<form action="." method="post">
+<input type="hidden" name="id" value={{restaurant.id}}>
+<input type="hidden" name="vote" value="yes"> 
+<input type="submit" value="Vote YES"></form>
+<form action="." method="post">
+<input type="hidden" name="id" value={{restaurant.id}}>
+<input type="hidden" name="vote" value="no">
+<input type="submit" value="Vote NO"></form>
+{% if detail %}
+{% if comments %}
+<h3>Comments:</h3>
+<div id="content">
+{% for comment in comments %}
+<br>{{comment.date|date:"D, j M y - H:i"}}:<br>
+{{comment.content|linebreaksbr}}<br>
 {% endfor %}
+</div>
+{% endif %}
+<br><br>
+<form name="postform" action="." method="post" id="postform">
+<h3>Add your comment!</h3>
+<table>
+<tr><td>Message:</td><td><textarea name="postcontent" maxLength=2500 rows="8" cols="80"></textarea></td></tr>
+</table>
+<input type="submit" value="Post your Comment">
+</form>
+{% endif %}
+</div></div>
+<br>
+{% endautoescape %}
+{% endfor %}
+</div>
 {% endblock %}

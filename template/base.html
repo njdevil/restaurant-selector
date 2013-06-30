@@ -1,9 +1,63 @@
 <html>
 <head>
 <style>
+body {font-family: verdana;
+	font-size: 70%;
+	background: #000840;
+	color: #ffffff;}
+#logo {width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 0%;
+    top: 0px;
+    margin-left: 0px;}
+#linkbox {width: 120px;
+    height: 50px;
+    position: absolute;
+    left: 0%;
+    top: 34px;
+    margin-left: 970px;}
+#searchbox {width: 300px;
+    height: 50px;
+    position: absolute;
+    left: 0%;
+    top: 30px;
+    margin-left: 1100px;}
+#field {width: 1200px;
+    position: absolute;
+    left: 0%;
+    top: 100px;
+    margin-left: 230px;}
+#postbox {width: 1200px;
+    border: 1px solid #888888;}
+#content {margin-left: 20px;
+    padding: 20px 10px;}
+
+.shortwidth {width: 10px;
+    float: left;}
+.category {font-weight: bold;
+    font-size: 150%;
+    line-height: 10px;
+    padding: 0px 10px;}
+td {font-size: 75%;
+    padding: 0px 10px;}
+.tags {font-size: 75%;}
+a:link {color: #bbbbbb;
+    text-decoration: none;}
+a:visited {color: #bbbbbb;
+    text-decoration: none;}
+
+{% block style %}
+{% endblock %}
 </style>
 </head>
 <body>
+<div id="linkbox">
+<a href="/">Standard</a> | <a href="/random">Random</a>
+</div>
+<div id="searchbox">
+<form name="searchform" action="." method="post" id="searchform"><input type="text" size=20 maxLength=30 name="search">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Search"></form>
+</div>
 {% block content %}
 {% endblock %}
 </body>

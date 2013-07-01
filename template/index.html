@@ -13,6 +13,7 @@ Restaurant List
 <br>{{restaurant.address}}
 <br>{{restaurant.city}}{% if restaurant.state %},{% endif %} {{restaurant.state}}&nbsp;{{restaurant.postcode}}
 <br>{{restaurant.country}}
+<br>Lat: {{restaurant.lat}}, Long: {{restaurant.lng}}
 <br>Comments: {{restaurant.commentcount}}
 <br>Rank: {{restaurant.rank_pct}}
 <br>Yes: {{restaurant.vote_yes}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No: {{restaurant.vote_no}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total votes: {% add restaurant.vote_yes restaurant.vote_no %}

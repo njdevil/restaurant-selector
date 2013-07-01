@@ -1,6 +1,9 @@
 from django.shortcuts import render_to_response
-from fueled.restaurant.models import Restaurant, Comment
+from fueled.restaurant.models import Restaurant, Comment, RestaurantForm
+from django.http import HttpResponseRedirect
+from django.template.defaultfilters import slugify
 import re
+import requests
 
 def index(request):
     if request.get_full_path()=="/random/":
@@ -23,7 +26,33 @@ def index(request):
     return render_to_response('index.html', {'data': data, 'test':request.get_full_path()})
 
 def add_restaurant(request):
-    pass
+    if request.method=="POST":
+        form=RestaurantForm(request.POST)
+        if form.is_valid():
+            name=form.cleaned_data["name"]
+            address=form.cleaned_data["address"]
+            city=form.cleaned_data["city"]
+            try:
+                state=form.cleaned_data["state"]
+            except:
+                state=""
+            country=form.cleaned_data["country"]
+            full_address=address+"+"+city+"+"+state+"+"+country
+            google=requests.get('http://maps.googleapis.com/maps/api/geocode/json?address='+full_address+'&sensor=false')
+            if "partial_match" in google.json["results"][0]:
+                error="Google can't find this address for Geocoding. Please check it and re-enter."
+                form=RestaurantForm()
+                return render_to_response('add.html', {'form': form, 'error': error})
+            else:
+                newrecord=form.save(commit=False)
+                newrecord.slug=slugify(name)
+                newrecord.lat="%.5f" % google.json["results"][0]["geometry"]["location"]["lat"]
+                newrecord.lng="%.5f" % google.json["results"][0]["geometry"]["location"]["lng"]
+                newrecord.save()
+                return HttpResponseRedirect("/")
+    else:
+        form=RestaurantForm()
+    return render_to_response('add.html', {'form': form,})
 
 def edit_restaurant(request):
     pass

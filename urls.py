@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^random/$','fueled.restaurant.views.index'),
     url(r'^restaurant/(?P<restaurant>.*)/edit/$','fueled.restaurant.views.edit_restaurant'),
     url(r'^restaurant/(?P<restaurant>.*)/$','fueled.restaurant.views.show_restaurant'),
-    url(r'^restaurant/add/$','fueled.restaurant.views.add_restaurant'),
+    url(r'^add/$','fueled.restaurant.views.add_restaurant'),
     # Examples:
     # url(r'^$', 'fueled.views.home', name='home'),
     # url(r'^fueled/', include('fueled.foo.urls')),

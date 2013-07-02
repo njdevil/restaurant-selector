@@ -50,11 +50,13 @@ Total votes: {% add restaurant.vote_yes restaurant.vote_no %}
 {% endfor %}
 {% endif %}
 {% if user.is_authenticated %}
-<form name="postform" action="." method="post" id="postform">
+<form action="." method="post">
 <h3>Add your comment!</h3>
 <table>
-<tr><td>Message:</td><td><textarea name="postcontent" maxLength=2500 rows="8" cols="80"></textarea></td></tr>
+<tr><td>Message:</td><td><textarea name="content" maxLength=2500 rows="8" cols="80"></textarea></td></tr>
 </table>
+<input type="hidden" name="id" value={{restaurant.id}}>
+<input type="hidden" name="comment" value="yes">
 <input type="submit" value="Post your Comment">
 </form>
 </div>

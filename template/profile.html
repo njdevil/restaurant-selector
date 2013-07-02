@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load mathtags %}
+{% block content %}
+<div id="field">
+{% for item in user2 %}
+Welcome {{item.username}}
+<br>words go here
+<br>{% multiply 9 item.age %}
+{% endfor %}
+</div>
+{% endblock %}
+

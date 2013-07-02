@@ -16,7 +16,7 @@ Restaurant List
 <br>Lat: {{restaurant.lat}}, Long: {{restaurant.lng}}
 <br>Comments: {{restaurant.commentcount}}
 <br>Rank: {{restaurant.rank_pct}}
-<br>Yes: {{restaurant.vote_yes}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No: {{restaurant.vote_no}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total votes: {% add restaurant.vote_yes restaurant.vote_no %}
+<br>Yes: <img src="/up.png">{{restaurant.vote_yes}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No: <img src="/down.png">{{restaurant.vote_no}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total votes: {% add restaurant.vote_yes restaurant.vote_no %}
 <form action="." method="post">
 <input type="hidden" name="id" value={{restaurant.id}}>
 <input type="hidden" name="vote" value="yes"> 
@@ -30,7 +30,7 @@ Restaurant List
 <h3>Comments:</h3>
 <div id="content">
 {% for comment in comments %}
-<br>{{comment.date|date:"D, j M y - H:i"}}:<br>
+<br>On {{comment.date|date:"D, j M y - H:i"}}, {% if comment.user == user %}<img src="/youwrote.jpg">{% else %}<br>{{comment.user}} wrote:{% endif %}<br>
 {{comment.content|linebreaksbr}}<br>
 {% endfor %}
 </div>

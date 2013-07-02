@@ -53,6 +53,11 @@ a:visited {color: #bbbbbb;
 </head>
 <body>
 <div id="linkbox">
+{% if user.is_authenticated %}
+User= {{user}} <a href="/logout">(Logout)</a> 
+{% else %}
+<a href="/login">Login</a>
+{% endif %} | 
 <a href="/">Standard</a> | <a href="/random">Random</a>
 </div>
 <div id="searchbox">

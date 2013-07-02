@@ -1,6 +1,4 @@
 from django.conf.urls.defaults import patterns, include, url
-
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
@@ -9,14 +7,12 @@ urlpatterns = patterns('',
     url(r'^random/$','fueled.restaurant.views.index'),
     url(r'^restaurant/(?P<restaurant>.*)/edit/$','fueled.restaurant.views.edit_restaurant'),
     url(r'^restaurant/(?P<restaurant>.*)/$','fueled.restaurant.views.show_restaurant'),
-    url(r'^add/$','fueled.restaurant.views.add_restaurant'),
-    # Examples:
-    # url(r'^$', 'fueled.views.home', name='home'),
-    # url(r'^fueled/', include('fueled.foo.urls')),
+    url(r'^login/$','fueled.restaurant.views.userlogin'),
+    url(r'^logout/$','fueled.restaurant.views.userlogout'),
+    url(r'^user/(?P<username>.*)/$','fueled.restaurant.views.user_profile'),
+    url(r'^add/restaurant/$','fueled.restaurant.views.add_restaurant'),
+    url(r'^add/user/$','fueled.restaurant.views.add_user'),
+    url(r'^add/group/$','fueled.restaurant.views.add_group'),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )

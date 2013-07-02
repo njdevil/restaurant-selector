@@ -1,5 +1,6 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, forms
+from django.contrib.auth.models import User, Group
 
 #Use ISO-3166-2 for countries
 COUNTRIES=(('US','USA'),
@@ -40,18 +41,28 @@ class Restaurant(models.Model):
     def __unicode__(self):
         return self.name
 
-
-
 class Comment(models.Model):
     restaurant=models.ForeignKey(Restaurant)
-    #user=models.ForeignKey(User)
+    user=models.ForeignKey(User)
     date=models.DateTimeField(auto_now_add=True)
     content=models.TextField()
 
     def __unicode__(self):
         return self.date
 
+class ExtendedUser(User):
+    age=models.IntegerField(blank=True)
+    likes=models.CharField(max_length=100, blank=True)
+    dislikes=models.CharField(max_length=100, blank=True)
 
 class RestaurantForm(ModelForm):
     class Meta:
         model=Restaurant
+
+class UserForm(ModelForm):
+    class Meta:
+        model=ExtendedUser
+
+class GroupForm(ModelForm):
+    class Meta:
+        model=Group

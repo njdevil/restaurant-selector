@@ -33,41 +33,6 @@ def index(request):
     return render_to_response('index.html', {'data': data, 'test':request.get_full_path()}, RequestContext(request))
 
 
-def add_restaurant(request):
-    title="Add New Restaurant"
-    if request.method=="POST":
-        form=RestaurantForm(request.POST)
-        if form.is_valid():
-            name=form.cleaned_data["name"]
-            address=form.cleaned_data["address"]
-            city=form.cleaned_data["city"]
-            try:
-                state=form.cleaned_data["state"]
-            except:
-                state=""
-            country=form.cleaned_data["country"]
-            full_address=address+"+"+city+"+"+state+"+"+country
-            google=requests.get('http://maps.googleapis.com/maps/api/geocode/json?address='+full_address+'&sensor=false')
-            if "partial_match" in google.json["results"][0]:
-                error="Google can't find this address for Geocoding. Please check it and re-enter."
-                form=RestaurantForm()
-                return render_to_response('add.html', {'form': form, 'title': title, 'error': error})
-            else:
-                newrecord=form.save(commit=False)
-                newrecord.slug=slugify(name)
-                newrecord.lat="%.5f" % google.json["results"][0]["geometry"]["location"]["lat"]
-                newrecord.lng="%.5f" % google.json["results"][0]["geometry"]["location"]["lng"]
-                newrecord.save()
-                return HttpResponseRedirect("/")
-    else:
-        form=RestaurantForm()
-    return render_to_response('addform.html', {'form': form, 'title': title,})
-
-
-def edit_restaurant(request, restaurant):
-    pass
-
-
 def show_restaurant(request,restaurant):
     _detail="x"
     data=Restaurant.objects.filter(slug=restaurant).values().extra(select={'commentcount':'select count(restaurant_comment.id) from restaurant_comment where restaurant_comment.restaurant_id=restaurant_restaurant.id'},)
@@ -96,6 +61,9 @@ def show_restaurant(request,restaurant):
 
     return render_to_response('index.html', {'data': data, 'detail': _detail, 'comments': comments}, RequestContext(request))
 
+##############################
+#LOGIN/LOGOUT, Profile Section
+##############################
 
 @login_required
 def user_profile(request,username):
@@ -117,16 +85,51 @@ def userlogin(request):
                 if user.is_active:
                     login(request,user)
                     return HttpResponseRedirect('/user/'+request.POST.get('username'))
-        return render_to_response('addform.html', {'c': c, 'form': form}, context_instance=RequestContext(request))
+        return render_to_response('addform.html', {'c': c, 'form': form}, RequestContext(request))
     else:
         form=LoginForm()
 
-    return render_to_response('addform.html', {'c': c, 'form': form}, context_instance=RequestContext(request))
+    return render_to_response('addform.html', {'c': c, 'form': form}, RequestContext(request))
 
 
 def userlogout(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+##############################
+#Add records section
+##############################
+
+def add_restaurant(request):
+    title="Add New Restaurant"
+    if request.method=="POST":
+        form=RestaurantForm(request.POST)
+        if form.is_valid():
+            name=form.cleaned_data["name"]
+            address=form.cleaned_data["address"]
+            city=form.cleaned_data["city"]
+            try:
+                state=form.cleaned_data["state"]
+            except:
+                state=""
+            country=form.cleaned_data["country"]
+            full_address=address+"+"+city+"+"+state+"+"+country
+            google=requests.get('http://maps.googleapis.com/maps/api/geocode/json?address='+full_address+'&sensor=false')
+            if "partial_match" in google.json["results"][0]:
+                error="Google can't find this address for Geocoding. Please check it and re-enter."
+                form=RestaurantForm()
+                return render_to_response('add.html', {'form': form, 'title': title, 'error': error})
+            else:
+                newrecord=form.save(commit=False)
+                newrecord.slug=slugify(name)
+                newrecord.lat="%.5f" % google.json["results"][0]["geometry"]["location"]["lat"]
+                newrecord.lng="%.5f" % google.json["results"][0]["geometry"]["location"]["lng"]
+                newrecord.save()
+                return HttpResponseRedirect("/")
+    else:
+        form=RestaurantForm()
+    return render_to_response('addform.html', {'form': form, 'title': title,}, RequestContext(request))
 
 
 def add_user(request):
@@ -145,7 +148,7 @@ def add_user(request):
             return HttpResponseRedirect('/')
     else:
         form=UserForm()
-    return render_to_response('addform.html', {'form': form, 'title': title,})
+    return render_to_response('addform.html', {'form': form, 'title': title,}, RequestContext(request))
 
 def add_group(request):
     title="Add New Group"
@@ -156,5 +159,5 @@ def add_group(request):
             return HttpResponseRedirect("/")
     else:
         form=GroupForm()
-    return render_to_response('addform.html', {'form': form, 'title': title,})
+    return render_to_response('addform.html', {'form': form, 'title': title,}, RequestContext(request))
 

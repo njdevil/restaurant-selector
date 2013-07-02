@@ -5,33 +5,41 @@ body {font-family: verdana;
 	font-size: 70%;
 	background: #000840;
 	color: #ffffff;}
-#logo {width: 100px;
-    height: 100px;
-    position: absolute;
-    left: 0%;
-    top: 0px;
-    margin-left: 0px;}
-#linkbox {width: 120px;
-    height: 50px;
-    position: absolute;
-    left: 0%;
-    top: 34px;
-    margin-left: 970px;}
-#searchbox {width: 300px;
-    height: 50px;
-    position: absolute;
-    left: 0%;
-    top: 30px;
-    margin-left: 1100px;}
-#field {width: 1200px;
-    position: absolute;
-    left: 0%;
-    top: 100px;
-    margin-left: 230px;}
-#postbox {width: 1200px;
-    border: 1px solid #888888;}
-#content {margin-left: 20px;
-    padding: 20px 10px;}
+#box0 {position: absolute;
+    width: 801px;
+    left: 50%;
+    top: 100px;}
+#content {position: relative;
+    width: 800px;
+    height: 220px;
+    border: 1px #808080 solid;}
+#commentbox {position: relative;
+    width: 800px;
+    top: -350px;
+    border: 1px #808080 solid;}
+#yesbox {position: relative;
+        top: -130px;
+        left: 300px;}
+#yesnum {position: relative;
+        top: -90px;
+        left: 30px;
+        font-size: 500%;}
+#yesvote {position: relative;
+        top: -60px;
+        left: 7px;}
+#nobox {position: relative;
+        top: -335px;
+        left: 500px;}
+#nonum {position: relative;
+        top: -87px;
+        left: 30px;
+        font-size: 500%;}
+#novote {position: relative;
+        top: -58px;
+        left: 10px;}
+#total {position: relative;
+        top: -390px;
+        left: 410px;}
 
 .shortwidth {width: 10px;
     float: left;}
@@ -52,17 +60,13 @@ a:visited {color: #bbbbbb;
 </style>
 </head>
 <body>
-<div id="linkbox">
 {% if user.is_authenticated %}
 User= {{user}} <a href="/logout">(Logout)</a> 
 {% else %}
 <a href="/login">Login</a>
 {% endif %} | 
-<a href="/">Standard</a> | <a href="/random">Random</a>
-</div>
-<div id="searchbox">
-<form name="searchform" action="." method="post" id="searchform"><input type="text" size=20 maxLength=30 name="search">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Search"></form>
-</div>
+<a href="/">Standard</a> | <a href="/random">Random</a> | <a href="/add/restaurant">Add Restaurant</a> | <a href="/add/user">Add User</a> | <a href="/add/group">Add Group</a>
+<br><br>
 {% block content %}
 {% endblock %}
 </body>

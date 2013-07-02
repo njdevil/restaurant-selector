@@ -13,29 +13,43 @@ Restaurant List
 <br>{{restaurant.address}}
 <br>{{restaurant.city}}{% if restaurant.state %},{% endif %} {{restaurant.state}}&nbsp;{{restaurant.postcode}}
 <br>{{restaurant.country}}
-<br>Lat: {{restaurant.lat}}, Long: {{restaurant.lng}}
-<br>Comments: {{restaurant.commentcount}}
-<br>Rank: {{restaurant.rank_pct}}
-<br>Yes: <img src="/up.png">{{restaurant.vote_yes}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No: <img src="/down.png">{{restaurant.vote_no}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total votes: {% add restaurant.vote_yes restaurant.vote_no %}
+<br><br>Lat: {{restaurant.lat}}, Long: {{restaurant.lng}}
+<br><br>Comments: {{restaurant.commentcount}}
+<div id="yesbox"><img src="/up.png">
+<div id="yesnum">{{restaurant.vote_yes}}</div>
+<div id="yesvote">
 <form action="." method="post">
 <input type="hidden" name="id" value={{restaurant.id}}>
-<input type="hidden" name="vote" value="yes"> 
+<input type="hidden" name="vote" value="yes">
 <input type="submit" value="Vote YES"></form>
+</div>
+</div>
+<div id="nobox"><img src="/down.png">
+<div id="nonum">{{restaurant.vote_no}}</div>
+<div id="novote">
 <form action="." method="post">
 <input type="hidden" name="id" value={{restaurant.id}}>
 <input type="hidden" name="vote" value="no">
 <input type="submit" value="Vote NO"></form>
+</div>
+</div>
+<div id="total">
+Total votes: {% add restaurant.vote_yes restaurant.vote_no %}
+<br>Rank: {{restaurant.rank_pct}}
+
+</div>
+
+
 {% if detail %}
 {% if comments %}
+<div id="commentbox">
 <h3>Comments:</h3>
-<div id="content">
 {% for comment in comments %}
 <br>On {{comment.date|date:"D, j M y - H:i"}}, {% if comment.user == user %}<img src="/youwrote.jpg">{% else %}<br>{{comment.user}} wrote:{% endif %}<br>
 {{comment.content|linebreaksbr}}<br>
 {% endfor %}
-</div>
 {% endif %}
-<br><br>
+{% if user.is_authenticated %}
 <form name="postform" action="." method="post" id="postform">
 <h3>Add your comment!</h3>
 <table>
@@ -43,6 +57,8 @@ Restaurant List
 </table>
 <input type="submit" value="Post your Comment">
 </form>
+</div>
+{% endif %}
 {% endif %}
 </div></div>
 <br>

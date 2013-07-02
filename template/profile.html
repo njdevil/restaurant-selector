@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load mathtags %}
 {% block content %}
-<div id="field">
+<div id="box0">
 {% for item in user2 %}
 Welcome {{item.username}}
-<br>words go here
-<br>{% multiply 9 item.age %}
+<br><br>Age: {{item.age}}
+<br><br>Likes: {{item.likes}}
+<br><br>Dislikes: {{item.dislikes}}
+<br><br>Custom math tag multiplication: {% multiply 7.5 item.age %}
 {% endfor %}
 </div>
 {% endblock %}

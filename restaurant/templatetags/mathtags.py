@@ -1,3 +1,8 @@
+# Restaurant Selector v0.1
+# https://github.com/njdevil/restaurant-selector
+# ©2013 Modular Programming Systems Inc
+# released as GPL 3
+
 from django import template
 
 register=template.Library()

@@ -38,3 +38,9 @@ Django Admin can be used, but created some ADD pages so you wont have to use it.
 Google Maps
 ===========
 As part of the Add Restaurant module, the provided address is Geocoded through Google Maps.  If the address returns the top level of accuracy/precision, the address is permitted and saved into the DB.  If any other accuracy/precision is returned, the record will not save and will return an error.  Permitted addresses will have their Lat & Long saved to the DB.  This can be used in future releases for displaying a Google Map for each location.
+
+# Restaurant Selector v0.1
+# https://github.com/njdevil/restaurant-selector
+# ©2013 Modular Programming Systems Inc
+# released as GPL 3
+

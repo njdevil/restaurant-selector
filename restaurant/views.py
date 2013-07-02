@@ -1,3 +1,9 @@
+# Restaurant Selector v0.1
+# https://github.com/njdevil/restaurant-selector
+# ©2013 Modular Programming Systems Inc
+# released as GPL 3
+
+
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template.defaultfilters import slugify

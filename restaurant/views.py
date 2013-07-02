@@ -44,12 +44,6 @@ def show_restaurant(request,restaurant):
     data=Restaurant.objects.filter(slug=restaurant).values().extra(select={'commentcount':'select count(restaurant_comment.id) from restaurant_comment where restaurant_comment.restaurant_id=restaurant_restaurant.id'},)
     commentnameid=data[0]["id"]
     comments=Comment.objects.filter(restaurant__name=data[0]["name"])
-#    content=request.POST.get('postcontent','')
-#    content=re.sub("<a href=.*?</a>","",content)
-#    content=re.sub("<\?","",content)
-
- #   if content:
- #       Comment.objects.create(restaurant_id=commentnameid, user_id=request.user.id, content=content).save()
 
     if request.POST:
         post=request.POST.copy()
